@@ -1,0 +1,24 @@
+GREP
+The task is to implement the Linux command line utility “grep”. The subset of all features that you should focus on:
+•	Parsing of CLI flags & arguments
+•	Simple patterns searching
+•	Parallel searching*
+•	Support for:
+o	-E, --extended-regexp  (same as python’s `re` module)
+o	-i, --ignore-case
+o	-c, --count
+o	-n, --line-number
+o	-A NUM, --after-context=NUM
+o	-B NUM, --before-context=NUM
+o	-C NUM, -NUM, --context=NUM
+o	-exclude=GLOB
+o	--include=GLOB
+o	-r, --recursive
+o
+o	-f FILE, --file=FILE
+o	-L, --files-without-match
+o	-l, --files-with-matches
+o	--group-separator=SEP
+o	--exclude-from=FILE
+o	--exclude-dir=GLOB
+o	-H, --with-filename
