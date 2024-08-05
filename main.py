@@ -28,6 +28,6 @@ if __name__ == "__main__":
                         action='store_true')  # on/off flag
 
     args = parser.parse_args()
-    print(args.file_path, args.count, args.verbose, args.foo, args.bar)
+    print(args.file_path, args.count, args.verbose)
 
     find_pattern_in_file(args.file_path, args.pattern)
