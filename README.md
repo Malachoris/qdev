@@ -1,0 +1,2 @@
+# qdev
+Basic training python
