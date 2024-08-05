@@ -1,9 +1,10 @@
 # qdev
 
-The task is to implement the Linux command line utility "[grep](https://man7.org/linux/man-pages/man1/grep.1.html)”. The subset of all features that you should focus on:
-Parsing of CLI flags & arguments
-Simple patterns searching
-Parallel searching*
+The task is to implement the Linux command line utility "[grep](https://man7.org/linux/man-pages/man1/grep.1.html)”. 
+The subset of all features that you should focus on:
+- Parsing of CLI flags & arguments
+- Simple patterns searching
+- Parallel searching*
 
 Support for:
 ### part 1

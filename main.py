@@ -1,9 +1,17 @@
-def new_stuff(nr_1, nr_2):
-    return nr_1 + nr_2
+import argparse
+import concurrent.futures
+import urllib.request
+
 
 
 if __name__ == "__main__":
-    a = 5
-    b = 4
+    parser = argparse.ArgumentParser()
 
-    print(new_stuff(a, b))
+    parser.add_argument('file_path')  # positional argument
+    parser.add_argument('pattern')  # positional argument
+    parser.add_argument('-c', '--count')  # option that takes a value
+    parser.add_argument('-v', '--verbose',
+                        action='store_true')  # on/off flag
+
+    args = parser.parse_args()
+    # print(args.file_path, args.count, args.verbose)
