@@ -1,4 +1,5 @@
 import argparse
+from pathlib import Path
 
 from grep_actions.count import Count
 
@@ -10,6 +11,11 @@ def find_pattern_in_file(file_path, pattern=None):
             if pattern in line:
                 print(line)
 
+
+    current_file = Path(".") / __file__
+    lines = current_file.read_text().splitlines()
+    for ind, line in enumerate(lines):
+        print(ind, line)
 
 if __name__ == "__main__":
 
