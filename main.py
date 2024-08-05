@@ -13,8 +13,8 @@ def find_pattern_in_file(file_path, pattern=None):
 
 if __name__ == "__main__":
 
-    file_path = "C:\git_repos\qdev\config\input.txt"
-    find_pattern_in_file(file_path, "Simple")
+    # file_path = "C:\git_repos\qdev\config\input.txt"
+    # find_pattern_in_file(file_path, "Simple")
 
     parser = argparse.ArgumentParser()
 
