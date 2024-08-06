@@ -19,7 +19,6 @@ def find_pattern_by_line(file: Path, pattern, ignore_case=False):
                 print(index, line)
 
 
-path_pattern = "*.txt"
 current_path = Path()
 pattern = "Simple"
 recursive = True
