@@ -44,7 +44,7 @@ for file in current_path.rglob(
     find_pattern_by_line(file, pattern)
 
 
-def search_for_pattern(arg: argparse.Namespace):  
+def search_for_pattern(arg: argparse.Namespace):
     current_path: Path = arg.file_path
     pattern = arg.pattern
 
@@ -53,13 +53,13 @@ def search_for_pattern(arg: argparse.Namespace):
             if item.is_file():
                 find_pattern_by_line(item, pattern)
             else:
-                f"We dont go deeper try adding -r flag to cmd"
+                print(f"We dont go deeper try adding -r flag to cmd")
 
     elif current_path.is_file():
         find_pattern_by_line(current_path, pattern)
 
     else:
-        f"We dont know what it is, better dont touch."
+        print(f"We dont know what it is, better dont touch.")
         return
 
     if arg.ignore_case:
