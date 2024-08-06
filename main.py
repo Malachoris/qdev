@@ -1,39 +1,53 @@
 import argparse
 from pathlib import Path
+import re
 
-from grep_actions.count import Count
+# current_file = Path("C:\git_repos\qdev\config\input.txt")
+# lines = current_file.read_text(encoding="UTF-8").splitlines()
+# for index, line in enumerate(lines):
+#     print(index, line)
+
+current = Path(__file__)  # C:\git_repos\qdev\main.py
+current = Path.home()  # C:\Users\lukas.smicys
+current = Path.cwd()  # C:\git_repos\qdev
+current = Path.cwd().parent  # C:\git_repos
+current = Path.cwd().parents[1]  # C:\
+print(f"# {current}")
 
 
-def find_pattern_in_file(file_path, pattern=None):
-    with open(file_path, mode="r", encoding="UTF-8") as file:
-        lines = file.readlines()
-        for line in lines:
+def search_for_pattern(arg: argparse.Namespace):
+    current_path = arg.file_path
+    pattern = arg.pattern
+
+    with open(current_path, mode="r", encoding="UTF-8") as file:
+        for index, line in enumerate(file):
             if pattern in line:
-                print(line)
+                print(index, line)
 
+    if arg.ignore_case:
+        print("ignore case")
 
-    current_file = Path(".") / __file__
-    lines = current_file.read_text().splitlines()
-    for ind, line in enumerate(lines):
-        print(ind, line)
+    if arg.recursive:
+        print("recursive")
+
 
 if __name__ == "__main__":
-
-    # file_path = "C:\git_repos\qdev\config\input.txt"
-    # find_pattern_in_file(file_path, "Simple")
-
-    parser = argparse.ArgumentParser()
-
-    # parser.add_argument('-f', '--foo', action=Count)
-    # parser.add_argument('bar', action=Count)
-
-    parser.add_argument('file_path')  # positional argument
-    parser.add_argument('pattern')  # positional argument
-    parser.add_argument('-c', '--count')  # option that takes a value
-    parser.add_argument('-v', '--verbose',
+    parser = argparse.ArgumentParser(description="Find pattern in files")
+    parser.add_argument('file_path', type=Path, )  # positional argument
+    parser.add_argument('pattern', type=str)  # positional argument
+    # parser.add_argument('-E', '--extended_regex')
+    # parser.add_argument('-A', '--after_context')
+    # parser.add_argument('-B', '--before_context')
+    # parser.add_argument('-C', '--context')
+    parser.add_argument('-i', '--ignore_case',
+                        action='store_true')  # on/off flag
+    # parser.add_argument('-c', '--count',
+    #                     action='store_true')  # on/off flag
+    # parser.add_argument('-n', '--line_number',
+    #                     action='store_true')  # on/off flag
+    parser.add_argument('-r', '--recursive',
                         action='store_true')  # on/off flag
 
     args = parser.parse_args()
-    print(args.file_path, args.count, args.verbose)
-
-    find_pattern_in_file(args.file_path, args.pattern)
+    print(args.file_path, args.pattern)
+    search_for_pattern(args)
