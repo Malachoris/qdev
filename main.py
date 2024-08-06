@@ -44,8 +44,8 @@ for file in current_path.rglob(
     find_pattern_by_line(file, pattern)
 
 
-def search_for_pattern(arg: argparse.Namespace):  # why we can pass in multiple?
-    current_path: Path = arg.file_path  # How knows, is it because parse_args() later?
+def search_for_pattern(arg: argparse.Namespace):  
+    current_path: Path = arg.file_path
     pattern = arg.pattern
 
     if current_path.is_dir():
