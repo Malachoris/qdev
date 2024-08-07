@@ -1,6 +1,8 @@
 import argparse
+import time
 from pathlib import Path
 import re
+from typing import Generator
 
 
 def find_pattern_by_line_regex(file: Path, pattern, ignore_case=False,
@@ -89,6 +91,16 @@ def search_for_pattern(args: argparse.Namespace):
     current_path = args.file_path
     pattern = args.pattern
     count = 0
+
+# TODO: this bellow
+    if not current_path.exists():
+        raise Exception("Bad dir")
+
+# TODO: class with unpacking args.Namespaces and add types.
+# TODO: when finished actual operation exit -> return
+# TODO: add more defs and a class.
+# TODO: args.before.extend(lines[max(index-3, 0):index])
+# TODO: args.before.extend(lines[max(index+3, len(lines):index])
 
     searched_files = current_path.glob("*")
     if args.recursive:
