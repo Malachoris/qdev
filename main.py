@@ -3,8 +3,8 @@ from pathlib import Path
 import re
 
 
-def find_pattern_by_line_re(file: Path, pattern, ignore_case=False,
-                            line_nr=False):
+def find_pattern_by_line_regex(file: Path, pattern, ignore_case=False,
+                               line_nr=False):
     count = 0
     try:
         lines = file.read_text(encoding="UTF-8").splitlines()
@@ -45,7 +45,7 @@ def find_pattern_by_line(file: Path, pattern, ignore_case=False,
         if pattern in line and not line_nr:
             count += 1
             print(line)
-            
+
         elif pattern in line and line_nr:
             count += 1
             print(index, line)
@@ -105,16 +105,16 @@ def search_for_pattern(args: argparse.Namespace):
     if current_path.is_dir():
         for item in searched_files:
             if item.is_file() and args.extended_re:
-                count += find_pattern_by_line_re(item, pattern,
-                                                 args.ignore_case,
-                                                 args.line_number)
+                count += find_pattern_by_line_regex(item, pattern,
+                                                    args.ignore_case,
+                                                    args.line_number)
             elif item.is_file() and not args.extended_re:
                 count += find_pattern_by_line(item, pattern, args.ignore_case,
                                               args.line_number)
 
     elif current_path.is_file() and args.extended_re:
-        count += find_pattern_by_line_re(current_path, pattern,
-                                         args.ignore_case, args.line_number)
+        count += find_pattern_by_line_regex(current_path, pattern,
+                                            args.ignore_case, args.line_number)
     elif current_path.is_file() and not args.extended_re:
         count += find_pattern_by_line(current_path, pattern, args.ignore_case,
                                       args.line_number)
