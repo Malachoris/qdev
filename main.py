@@ -12,18 +12,14 @@ def find_pattern_by_line_regex(file: Path, pattern, ignore_case=False,
         return count
 
     for index, line in enumerate(lines):
-        match = re.search(pattern, line) # "<re.Match object; span=(11, 17), match='simple'>"
+        match = re.search(pattern, line)  # "<re.Match object; span=(11, 17), match='simple'>"
 
         if ignore_case:
             match = re.search(pattern, line, flags=re.IGNORECASE)
 
-        if match and not line_nr:
+        if match:
             count += 1
-            print(line)
-
-        elif match and line_nr:
-            count += 1
-            print(index, line)
+            print(index, line if line_nr else line)
 
     return count
 
@@ -42,13 +38,9 @@ def find_pattern_by_line(file: Path, pattern, ignore_case=False,
             pattern = pattern.lower()
             line = line.lower()
 
-        if pattern in line and not line_nr:
+        if pattern in line:
             count += 1
-            print(line)
-
-        elif pattern in line and line_nr:
-            count += 1
-            print(index, line)
+            print(index, line if line_nr else line)
 
     return count
 
