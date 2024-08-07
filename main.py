@@ -33,27 +33,6 @@ def find_pattern_by_line(file: Path, pattern, ignore_case=False,
     return count
 
 
-# def find_pattern_by_line(file: Path, pattern, ignore_case=False,
-#                          line_nr=False):
-#     count = 0
-#     try:
-#         lines = file.read_text(encoding="UTF-8").splitlines()
-#     except UnicodeDecodeError:
-#         return count
-#
-#     for index, line in enumerate(lines):
-#
-#         if ignore_case:
-#             pattern = pattern.lower()
-#             line = line.lower()
-#
-#         if pattern in line:
-#             count += 1
-#             print(index, line if line_nr else line)
-#
-#     return count
-
-
 current_path = Path(".")
 pattern = "simple"  # "^def\s" "simple"
 recursive = True
