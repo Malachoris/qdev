@@ -10,23 +10,21 @@ def find_pattern_by_line_re(file: Path, pattern, ignore_case=False,
         lines = file.read_text(encoding="UTF-8").splitlines()
     except UnicodeDecodeError:
         return count
+
     for index, line in enumerate(lines):
-        if not ignore_case:
-            match = re.search(pattern, line) # "<re.Match object; span=(11, 17), match='simple'>"
-            if match and not line_nr:
-                count += 1
-                print(line)
-            elif match and line_nr:
-                count += 1
-                print(index, line)
-        else:
+        match = re.search(pattern, line) # "<re.Match object; span=(11, 17), match='simple'>"
+
+        if ignore_case:
             match = re.search(pattern, line, flags=re.IGNORECASE)
-            if match and not line_nr:
-                count += 1
-                print(line)
-            elif match and line_nr:
-                count += 1
-                print(index, line)
+
+        if match and not line_nr:
+            count += 1
+            print(line)
+
+        elif match and line_nr:
+            count += 1
+            print(index, line)
+
     return count
 
 
@@ -37,21 +35,21 @@ def find_pattern_by_line(file: Path, pattern, ignore_case=False,
         lines = file.read_text(encoding="UTF-8").splitlines()
     except UnicodeDecodeError:
         return count
+
     for index, line in enumerate(lines):
-        if not ignore_case:
-            if pattern in line and not line_nr:
-                count += 1
-                print(line)
-            elif pattern in line and line_nr:
-                count += 1
-                print(index, line)
-        else:
-            if pattern.lower() in line.lower() and not line_nr:
-                count += 1
-                print(line)
-            elif pattern.lower() in line.lower() and line_nr:
-                count += 1
-                print(index, line)
+
+        if ignore_case:
+            pattern = pattern.lower()
+            line = line.lower()
+
+        if pattern in line and not line_nr:
+            count += 1
+            print(line)
+            
+        elif pattern in line and line_nr:
+            count += 1
+            print(index, line)
+
     return count
 
 
@@ -104,9 +102,6 @@ def search_for_pattern(args: argparse.Namespace):
     if args.recursive:
         searched_files = current_path.rglob("*")
 
-    # if args.extended_re:
-    #     pattern = args.extended_re
-
     if current_path.is_dir():
         for item in searched_files:
             if item.is_file() and args.extended_re:
@@ -136,7 +131,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Find pattern in files")
     parser.add_argument('file_path', type=Path, )  # positional argument
     parser.add_argument('pattern', type=str)  # positional argument
-    # on/off flag action='store_true'
     parser.add_argument('-E', '--extended_re', action='store_true')
     parser.add_argument('-i', '--ignore_case', action='store_true')
     parser.add_argument('-c', '--count', action='store_true')
