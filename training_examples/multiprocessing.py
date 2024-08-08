@@ -1,6 +1,7 @@
 import threading
 import time
 from queue import Queue
+import multiprocessing as multi
 
 # TODO: Computations
 # async / asyncio
@@ -38,6 +39,7 @@ def do_something(n: int, results: list[int], lock: threading.Lock):
     results.append(result)
     lock.release()
 
+files = [] # split input to 4 and assing each piece to a thread.
 
 # FIFO first in first out.
 # x = []
@@ -51,14 +53,14 @@ q = Queue(maxsize=10)
 numbers = [100, 75, 50, 25]
 
 start = time.time()
-threads: list[threading.Thread] = []
+threads: list[multi.Process] = []
 
 for num in numbers:
     result = factorial(num)
     print(result)
 
 for num in numbers:
-    thread = threading.Thread(target=do_something(), args=[num, results, 1])
+    thread = multi.Process(target=do_something(), args=[num, results, 1])
     thread.start()
     threads.append(thread)
 
