@@ -20,40 +20,47 @@ class Grep:
         self.patt_count = 0
         self.glob_pattern = "*"
 
-    def read_file_by_line(self, file):
-        lines = None
+    def read_file_by_line(self, file: Path) -> list[str]:
+        lines = []
         try:
-            lines = file.read_text(encoding="UTF-8").splitlines()
+            # lines = file.read_text(encoding="UTF-8").splitlines()
+            yield from file.read_text(encoding="UTF-8").splitlines()
         except UnicodeDecodeError:
             return lines
 
     def find_pattern_in_line(self, pattern: str, lines: list):
         for index, line in enumerate(lines):
 
-            match = self.use_pure_str(self.ignore_case, pattern, line)
+            match = self.use_pure_str
 
             if self.regex:
-                match = self.use_regex(self.ignore_case, pattern, line)
+                match = self.use_regex
 
-            if match:
-                self.patt_count += 1 if self.count else self.patt_count
+            if match(self.ignore_case, pattern, line):
+                self.patt_count += (1 if self.count else 0)
                 print((index, line) if self.line_nr else line)
 
     def use_regex(self, ignore_case: bool, pattern: str, line: str):
-        match = re.search(pattern, line)
+        flag = 0
         if ignore_case:
-            match = re.search(pattern, line, flags=re.IGNORECASE)
+            flag = re.IGNORECASE
+
+        match = re.search(pattern, line, flags=flag)
         if match:
             return line
         return
 
     def use_pure_str(self, ignore_case: bool, pattern: str, line: str):
-        match = pattern in line
+        inner_pattern = pattern
+        inner_line = line
+
         if ignore_case:
-            match = pattern.lower() in line.lower()
-        if match:
+            inner_pattern = pattern.lower()
+            inner_line = line.lower()
+
+        if inner_pattern in inner_line:
             return line
-        return None
+        return
 
     # def get_all_files(self):
     #     searched_files = self.file_path.glob
@@ -72,8 +79,8 @@ class Grep:
             pass
 
     def exclude_glob_pattern(self, path_dir: Path, pattern: str) -> list:
-        dir_content = [path for path in path_dir.parent.glob('*') if
-                      pattern not in path.stem]
+        dir_content = [path for path in path_dir.glob(self.glob_pattern) if
+                       path != self.exclude]
         return dir_content
 
     def process_directory(self):
@@ -88,11 +95,19 @@ class Grep:
             self.glob_pattern = self.include
 
         elif self.exclude:
-            searched_files = self.exclude_glob_pattern(self.file_path, self.pattern)
+            searched_files = self.exclude_glob_pattern(self.file_path,
+                                                       self.pattern)
 
-        for item in searched_files(self.glob_pattern):
+        searched_list = searched_files(self.glob_pattern)
+
+
+        for item in searched_list:
             line_lst = self.read_file_by_line(item)
             self.find_pattern_in_line(self.pattern, line_lst)
 
         if self.count:
             print(self.patt_count)
+
+    def process_data(self, input_data):
+        input_data = ["0", "1", "2", "3", "4", "5"]
+        return input_data

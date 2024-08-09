@@ -65,6 +65,8 @@ def find_pattern_by_line(file: Path, pattern: str, ignore_case=False,
 # if count_arg:
 #     print(f"Number of rows where pattern repeats is {count}")
 
+# Unpack list to individual elements and separate them with new line
+# print(*[1, 2, 3, 4, "a"], sep="\n")
 
 def search_for_pattern(args: argparse.Namespace):
     current_path = args.file_path
