@@ -88,7 +88,7 @@ class Grep:
             self.glob_pattern = self.include
 
         elif self.exclude:
-            self.glob_pattern = "!"+self.exclude
+            searched_files = self.exclude_glob_pattern(self.file_path, self.pattern)
 
         for item in searched_files(self.glob_pattern):
             line_lst = self.read_file_by_line(item)

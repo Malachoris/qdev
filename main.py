@@ -71,9 +71,8 @@ def search_for_pattern(args: argparse.Namespace):
     pattern = args.pattern
     count = 0
 
-    # TODO: this bellow
     if not current_path.exists():
-        raise Exception("Bad dir")
+        raise ValueError("Bad dir")
 
     # TODO: when finished actual operation exit -> return
     # TODO: add more defs and a class.
